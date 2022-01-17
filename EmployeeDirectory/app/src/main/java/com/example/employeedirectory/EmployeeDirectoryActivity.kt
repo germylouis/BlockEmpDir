@@ -15,7 +15,7 @@ import com.example.employeedirectory.data.repos.EmployeeRepoImpl
 import com.example.employeedirectory.viewmodels.EmployeeViewModel
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class EmployeeDirectoryActivity : AppCompatActivity() {
     private val employeeRepo: EmployeeRepoImpl
         get() = EmployeeRepoImpl(
             RetrofitInstance.getRetrofitInstance(Constants.EMPLOYEES_URL)?.create(
@@ -58,6 +58,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        val TAG: String = MainActivity::class.java.name
+        val TAG: String = EmployeeDirectoryActivity::class.java.name
     }
 }
