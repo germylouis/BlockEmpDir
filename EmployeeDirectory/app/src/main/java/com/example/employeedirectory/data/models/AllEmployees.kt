@@ -13,6 +13,5 @@ package com.example.employeedirectory.data.models
 import kotlinx.serialization.SerialName
 
 data class AllEmployees(
-    @SerialName("employees")
     val employees: List<Employee>
 )
