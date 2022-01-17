@@ -10,9 +10,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl) : ViewModel() {
-    private val _uiState = MutableStateFlow(LatestEmployeessUiState.Success(emptyList()))
-    val uiState: StateFlow<LatestEmployeessUiState> = _uiState
+    private val _uiState = MutableStateFlow(LatestEmployeesUiState.Success(emptyList()))
+    val uiState: StateFlow<LatestEmployeesUiState> = _uiState
 
+    /**
+     * Init block and Sealed class code from:
+     * https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
+     */
     init {
         viewModelScope.launch {
             employeeRepo.getEmployees()
@@ -21,7 +25,7 @@ class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl) : ViewModel(
                 // adding a new element to the flow and updating all
                 // of its collectors
                 ?.collect { employees ->
-                    _uiState.value = LatestEmployeessUiState.Success(employees?.employees)
+                    _uiState.value = LatestEmployeesUiState.Success(employees?.employees)
                 }
         }
     }
@@ -33,14 +37,12 @@ class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl) : ViewModel(
         }
     }
 
-    sealed class LatestEmployeessUiState {
-        data class Success(val news: List<Employee>?) : LatestEmployeessUiState()
-        data class Error(val exception: Throwable) : LatestEmployeessUiState()
+    sealed class LatestEmployeesUiState {
+        data class Success(val employees: List<Employee>?) : LatestEmployeesUiState()
+        data class Error(val exception: Throwable) : LatestEmployeesUiState()
     }
 
     companion object {
         val TAG: String = EmployeeViewModel::class.java.name
     }
 }
-
-
