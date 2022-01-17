@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Margin -->
+    <dimen name="margin_extra_extra_extra_large">64dp</dimen>
+    <dimen name="margin_extra_extra_large">32dp</dimen>
+    <dimen name="margin_extra_large">16dp</dimen>
+    <dimen name="margin_large">8dp</dimen>
+    <dimen name="margin_medium">4dp</dimen>
+    <dimen name="margin_small">2dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_extra_extra_extra_large">32dp</dimen>
+    <dimen name="padding_extra_extra_large">24dp</dimen>
+    <dimen name="padding_extra_large">16dp</dimen>
+    <dimen name="padding_large">8dp</dimen>
+    <dimen name="padding_medium">4dp</dimen>
+    <dimen name="padding_small">2dp</dimen>
+
+</resources>
