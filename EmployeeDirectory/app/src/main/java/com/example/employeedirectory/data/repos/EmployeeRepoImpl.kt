@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 class EmployeeRepoImpl(private var employeeDataSource: EmployeeDataSource?) : EmployeeRepo {
     override suspend fun getEmployees(): StateFlow<AllEmployees?>? {
-        return employeeDataSource?.getEmployees()?.value?.toStateFlowAllEmployeesEntity()
+        return employeeDataSource?.getEmployees()?.toStateFlowAllEmployeesEntity()
     }
 }

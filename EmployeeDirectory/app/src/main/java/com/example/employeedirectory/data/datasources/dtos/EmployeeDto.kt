@@ -8,7 +8,7 @@ data class EmployeeDto(
     @SerialName("full_name")
     val full_name: String,
     @SerialName("phone_number")
-    val phone_number: Int,
+    val phone_number: Long,
     @SerialName("email_address")
     val email_address: String,
     @SerialName("biography")

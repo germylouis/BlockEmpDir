@@ -15,7 +15,7 @@ import kotlinx.serialization.SerialName
 data class Employee(
     val uuid: String,
     val full_name: String,
-    val phone_number: Int,
+    val phone_number: Long,
     val email_address: String,
     val biography: String,
     val photo_url_small: String,
