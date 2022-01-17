@@ -25,12 +25,11 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
     private val factory: ViewModelProvider.AndroidViewModelFactory
         get() = EmployeeViewModel.Factory(application, employeeRepo)
     private val viewModel: EmployeeViewModel by viewModels { factory }
-    private var binding: ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //binding = EmployeeDirectoryActivity.inflate(layoutInflater)
-        setContentView(R.layout.eployee_directory_activity)
+        setContentView(R.layout.employee_directory_activity)
 
         /**
          * Code block from:
