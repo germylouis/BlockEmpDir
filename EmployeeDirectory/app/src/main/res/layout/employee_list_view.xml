@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Layout Resources came from:
-https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android-xml-layout/-->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout Resources came from:
+https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android-xml-layout/ -->
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
