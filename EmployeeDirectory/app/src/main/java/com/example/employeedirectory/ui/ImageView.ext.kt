@@ -1,13 +1,13 @@
 @file:JvmName("ImageViewExtension")
 
-package com.example.flickrfindr.api
+package com.example.employeedirectory.ui
 
 import android.graphics.Bitmap
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.ViewTarget
-import com.example.flickrfindr.R
+import com.example.employeedirectory.R
 
 fun ImageView.loadImage(url: String): ViewTarget<ImageView, Bitmap> {
     val circularProgressDrawable = CircularProgressDrawable(this.context)
