@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Layout Resources came from:
+<?xml version="1.0" encoding="utf-8"?><!-- Layout Resources came from:
 https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android-xml-layout/ -->
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,7 +7,7 @@ https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_large"
-    android:visibility="visible"
+    app:cardBackgroundColor="@color/md_theme_light_tertiary"
     app:cardCornerRadius="14dp"
     app:cardElevation="0dp">
 
@@ -41,15 +40,16 @@ https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="34dp"
-            android:orientation="vertical">
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small">
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/profile_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_large"
                 android:src="@drawable/profile_imgone"
                 app:civ_border="true"
                 app:civ_border_color="@android:color/white"
@@ -63,43 +63,73 @@ https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android
                 android:id="@+id/fld_employee_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_large"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_semi_bold"
                 android:lineSpacingExtra="7sp"
-                android:textColor="#2b2b2b"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHighlight="@color/md_theme_dark_onSecondaryContainer"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Germy Louis" />
 
             <TextView
-                android:id="@+id/lbl_workplace"
+                android:id="@+id/fld_employee_email"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/margin_large"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:lineSpacingExtra="6sp"
-                android:textColor="#161616"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_image"
-                tools:text="My Workplace" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:fontFamily="@font/poppins_medium"
+                android:lineSpacingExtra="7sp"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/fld_employee_name"
+                tools:text="glouis@imobile3.com" />
 
             <TextView
-                android:id="@+id/fld_description"
-                android:layout_width="match_parent"
+                android:id="@+id/fld_employee_team"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:fontFamily="@font/poppins_medium"
+                android:lineSpacingExtra="7sp"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/fld_employee_email"
+                tools:text="VitalPOS" />
+
+            <TextView
+                android:id="@+id/lbl_bio"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_large"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/employee_list_bio_lbl"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fld_employee_team"
+                tools:text="Bio: " />
+
+            <TextView
+                android:id="@+id/fld_bio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginStart="@dimen/margin_small"
                 android:fontFamily="@font/poppins"
                 android:lineSpacingExtra="7sp"
-                android:textColor="#4f4f4f"
-                android:textSize="13sp"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_workplace"
-                tools:text="This is the are where the description related to the employee and his workplace will be placed." />
+                app:layout_constraintStart_toEndOf="@id/lbl_bio"
+                app:layout_constraintTop_toBottomOf="@id/fld_employee_team"
+                tools:text="Software Engineer I for Global Payments." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

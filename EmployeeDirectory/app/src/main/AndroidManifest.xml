@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EployeeDirectory">
+        android:theme="@style/CustomTheme1">
         <activity
             android:name="com.example.employeedirectory.EmployeeDirectoryActivity"
             android:exported="true">
