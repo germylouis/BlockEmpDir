@@ -62,6 +62,14 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
                                 layoutManager = LinearLayoutManager(this@EmployeeDirectoryActivity)
                             }
                             state.employees?.let { employeeAdapter?.updateData(it) }
+                            binding?.swipeRefresh?.setOnRefreshListener {
+                                binding?.swipeRefresh?.isRefreshing = false
+                                state.employees?.let {
+                                    employeeAdapter?.updateData(
+                                        it
+                                    )
+                                }
+                            }
                         }
                         is EmployeeViewModel.LatestEmployeesUiState.Error -> Log.d(TAG, "germ: ${state.exception}.")
                     }
@@ -69,6 +77,8 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
             }
             // Note: at this point, the lifecycle is DESTROYED!
         }
+
+
     }
 
     companion object {
