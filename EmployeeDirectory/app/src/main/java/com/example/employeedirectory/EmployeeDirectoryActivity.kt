@@ -8,10 +8,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.employeedirectory.constants.Constants
 import com.example.employeedirectory.data.datasources.EmployeeDataSource
 import com.example.employeedirectory.data.datasources.RetrofitInstance
 import com.example.employeedirectory.data.repos.EmployeeRepoImpl
+import com.example.employeedirectory.databinding.EmployeeDirectoryActivityBinding
+import com.example.employeedirectory.ui.adapters.EmployeeDirectoryAdapter
 import com.example.employeedirectory.viewmodels.EmployeeViewModel
 import kotlinx.coroutines.launch
 
@@ -25,11 +28,14 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
     private val factory: ViewModelProvider.AndroidViewModelFactory
         get() = EmployeeViewModel.Factory(application, employeeRepo)
     private val viewModel: EmployeeViewModel by viewModels { factory }
+    private var binding: EmployeeDirectoryActivityBinding? = null
+    private var employeeAdapter: EmployeeDirectoryAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = EmployeeDirectoryActivity.inflate(layoutInflater)
-        setContentView(R.layout.employee_directory_activity)
+        binding = EmployeeDirectoryActivityBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+        employeeAdapter = EmployeeDirectoryAdapter()
 
         /**
          * Code block from:
@@ -46,10 +52,17 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
                 viewModel.uiState.collect { state ->
                     // New employees, update the map
                     when (state) {
-                        is EmployeeViewModel.LatestEmployeesUiState.Success -> Log.d(
-                            TAG,
-                            "germ: Size: ${state.employees?.size}."
-                        )
+                        is EmployeeViewModel.LatestEmployeesUiState.Success -> {
+                            Log.d(
+                                TAG,
+                                "germ: Size: ${state.employees?.size}."
+                            )
+                            binding?.employeesRv?.apply {
+                                adapter = employeeAdapter
+                                layoutManager = LinearLayoutManager(this@EmployeeDirectoryActivity)
+                            }
+                            state.employees?.let { employeeAdapter?.updateData(it) }
+                        }
                         is EmployeeViewModel.LatestEmployeesUiState.Error -> Log.d(TAG, "germ: ${state.exception}.")
                     }
                 }
