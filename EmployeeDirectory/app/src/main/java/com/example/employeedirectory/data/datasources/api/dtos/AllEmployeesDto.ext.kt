@@ -1,4 +1,4 @@
-package com.example.employeedirectory.data.datasources.dtos
+package com.example.employeedirectory.data.datasources.api.dtos
 
 import com.example.employeedirectory.data.models.AllEmployees
 import com.example.employeedirectory.data.models.Employee

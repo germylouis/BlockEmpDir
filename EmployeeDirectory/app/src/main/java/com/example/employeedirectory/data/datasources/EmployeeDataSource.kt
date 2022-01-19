@@ -1,6 +1,6 @@
 package com.example.employeedirectory.data.datasources
 
-import com.example.employeedirectory.data.datasources.dtos.AllEmployeesDto
+import com.example.employeedirectory.data.datasources.api.dtos.AllEmployeesDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 
