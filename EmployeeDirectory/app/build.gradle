@@ -70,6 +70,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
+    // https://mvnrepository.com/artifact/com.squareup.moshi/moshi
+    implementation 'com.squareup.moshi:moshi:1.13.0'
+
     // RecyclerView - https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.recyclerview:recyclerview-selection:1.2.0-alpha01'
