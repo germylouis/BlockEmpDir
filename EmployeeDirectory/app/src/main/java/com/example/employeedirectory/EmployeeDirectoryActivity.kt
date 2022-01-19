@@ -19,12 +19,14 @@ import com.example.employeedirectory.viewmodels.EmployeeViewModel
 import kotlinx.coroutines.launch
 
 class EmployeeDirectoryActivity : AppCompatActivity() {
-    private val employeeRepo: EmployeeRepoImpl
-        get() = EmployeeRepoImpl(
-            RetrofitInstance.getRetrofitInstance(Constants.EMPLOYEES_URL)?.create(
-                EmployeeDataSource::class.java
+    private val employeeRepo: EmployeeRepoImpl?
+        get() = RetrofitInstance.getRetrofitInstance(Constants.BASE_EMPLOYEES_URL)?.create(
+            EmployeeDataSource::class.java
+        )?.let {
+            EmployeeRepoImpl(
+                it, Constants.EMPLOYEES_JSON_TYPE
             )
-        )
+        }
     private val factory: ViewModelProvider.AndroidViewModelFactory
         get() = EmployeeViewModel.Factory(application, employeeRepo)
     private val viewModel: EmployeeViewModel by viewModels { factory }
