@@ -1,18 +1,18 @@
 package com.example.employeedirectory.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.employeedirectory.data.datasources.api.ResultWrapper
-import com.example.employeedirectory.data.models.Employee
 import com.example.employeedirectory.data.repos.EmployeeRepoImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl?) : ViewModel() {
-    private val _uiState = MutableStateFlow(LatestEmployeesUiState.Success(emptyList()))
-    val uiState: StateFlow<LatestEmployeesUiState> = _uiState
+    private var _uiSuccessState = MutableStateFlow(LatestEmployeesUiState.Success(emptyList()))
+    private var _uiErrorState = MutableStateFlow(LatestEmployeesUiState.Error(""))
+    var uiState: StateFlow<LatestEmployeesUiState> = _uiSuccessState
 
     /**
      * Init block and Sealed class code from:
@@ -20,19 +20,24 @@ class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl?) : ViewModel
      */
     init {
         viewModelScope.launch {
-            when (val response = employeeRepo?.getEmployees()) {
-                is ResultWrapper.NetworkError -> {}
-                is ResultWrapper.GenericError -> {}
-                is ResultWrapper.Success -> {
-                    response.value?.collect {
-                        _uiState.value = LatestEmployeesUiState.Success(it?.employees)
+            employeeRepo?.getEmployees()?.collect { latest ->
+                when (latest) {
+                    is LatestEmployeesUiState.Success -> {
+                        _uiSuccessState.value = latest
+                    }
+                    is LatestEmployeesUiState.Loading -> {
+
+                    }
+                    else -> {
+                        // _uiSuccessState.value =  MutableStateFlow(LatestEmployeesUiState.Error(""))
+                        uiState = MutableStateFlow(latest)
                     }
                 }
-                else -> {}
+
+                Log.d(TAG, "germ: ${uiState.value}: ")
             }
         }
     }
-
 
     class Factory(app: Application, private val employeeRepo: EmployeeRepoImpl?) : ViewModelFactory(app) {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -40,10 +45,6 @@ class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl?) : ViewModel
         }
     }
 
-    sealed class LatestEmployeesUiState {
-        data class Success(val employees: List<Employee>?) : LatestEmployeesUiState()
-        data class Error(val exception: Throwable) : LatestEmployeesUiState()
-    }
 
     companion object {
         val TAG: String = EmployeeViewModel::class.java.name

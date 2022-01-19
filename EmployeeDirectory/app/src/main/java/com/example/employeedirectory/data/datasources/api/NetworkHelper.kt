@@ -1,5 +1,6 @@
 package com.example.employeedirectory.data.datasources.api
 
+import android.util.Log
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.StateFlow
@@ -14,25 +15,25 @@ object NetworkHelper {
 
     suspend fun <T : Any> safeApiCall(
         dispatcher: CoroutineDispatcher,
-        apiCall: () -> StateFlow<T?>
-    ): ResultWrapper<StateFlow<T?>> {
-        return withContext(dispatcher) {
+        apiCall: () -> StateFlow<T>
+    ): ResultWrapper.Success<T> {
+        var api: StateFlow<T>? = null
+        withContext(dispatcher) {
             try {
-                ResultWrapper.Success(apiCall.invoke())
+                api = apiCall.invoke()
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is IOException -> ResultWrapper.NetworkError
                     is HttpException -> {
                         val code = throwable.code()
                         val errorResponse = convertErrorBody(throwable)
-                        ResultWrapper.GenericError(code, errorResponse)
+                        return@withContext ResultWrapper.GenericError(code, errorResponse)
                     }
-                    else -> {
-                        ResultWrapper.GenericError(null, null)
-                    }
+                    else -> {}
                 }
             }
         }
+        return ResultWrapper.Success(api?.value)
     }
 
     private fun convertErrorBody(throwable: HttpException): ApiStatus? {

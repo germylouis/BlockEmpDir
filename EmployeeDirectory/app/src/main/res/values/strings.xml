@@ -3,4 +3,5 @@
 
     <!--    Employee Directory List Activity-->
     <string name="employee_list_bio_lbl">Bio: </string>
+    <string name="employee_list_empty_lbl">Nothing to see here!</string>
 </resources>

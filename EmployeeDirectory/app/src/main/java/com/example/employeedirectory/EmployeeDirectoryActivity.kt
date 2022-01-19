@@ -2,6 +2,7 @@ package com.example.employeedirectory
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -16,6 +17,7 @@ import com.example.employeedirectory.data.repos.EmployeeRepoImpl
 import com.example.employeedirectory.databinding.EmployeeDirectoryActivityBinding
 import com.example.employeedirectory.ui.adapters.EmployeeDirectoryAdapter
 import com.example.employeedirectory.viewmodels.EmployeeViewModel
+import com.example.employeedirectory.viewmodels.LatestEmployeesUiState
 import kotlinx.coroutines.launch
 
 class EmployeeDirectoryActivity : AppCompatActivity() {
@@ -54,11 +56,12 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
                 viewModel.uiState.collect { state ->
                     // New employees, update the map
                     when (state) {
-                        is EmployeeViewModel.LatestEmployeesUiState.Success -> {
+                        is LatestEmployeesUiState.Success -> {
                             Log.d(
                                 TAG,
-                                "germ: Size: ${state.employees?.size}."
+                                "germ: LatestEmployeesUiState.Success. ${state.employees}"
                             )
+                            binding?.progressBar?.visibility = View.GONE
                             binding?.employeesRv?.apply {
                                 adapter = employeeAdapter
                                 layoutManager = LinearLayoutManager(this@EmployeeDirectoryActivity)
@@ -73,7 +76,16 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
                                 }
                             }
                         }
-                        is EmployeeViewModel.LatestEmployeesUiState.Error -> Log.d(TAG, "germ: ${state.exception}.")
+                        is LatestEmployeesUiState.Error -> {
+                            Log.d(TAG, "germ: LatestEmployeesUiState.Error.")
+                            binding?.progressBar?.visibility = View.GONE
+                            binding?.emptyImage?.visibility = View.VISIBLE
+                            binding?.emptyMessage?.visibility = View.VISIBLE
+                        }
+
+                        is LatestEmployeesUiState.Loading -> {
+                            binding?.progressBar?.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
