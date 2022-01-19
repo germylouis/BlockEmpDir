@@ -3,13 +3,14 @@ package com.example.employeedirectory.viewmodels
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.employeedirectory.data.datasources.api.ResultWrapper
 import com.example.employeedirectory.data.models.Employee
 import com.example.employeedirectory.data.repos.EmployeeRepoImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl) : ViewModel() {
+class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl?) : ViewModel() {
     private val _uiState = MutableStateFlow(LatestEmployeesUiState.Success(emptyList()))
     val uiState: StateFlow<LatestEmployeesUiState> = _uiState
 
@@ -19,19 +20,21 @@ class EmployeeViewModel(private val employeeRepo: EmployeeRepoImpl) : ViewModel(
      */
     init {
         viewModelScope.launch {
-            employeeRepo.getEmployees()
-                // Update View with the latest employees
-                // Writes to the value property of MutableStateFlow,
-                // adding a new element to the flow and updating all
-                // of its collectors
-                ?.collect { employees ->
-                    _uiState.value = LatestEmployeesUiState.Success(employees?.employees)
+            when (val response = employeeRepo?.getEmployees()) {
+                is ResultWrapper.NetworkError -> {}
+                is ResultWrapper.GenericError -> {}
+                is ResultWrapper.Success -> {
+                    response.value?.collect {
+                        _uiState.value = LatestEmployeesUiState.Success(it?.employees)
+                    }
                 }
+                else -> {}
+            }
         }
     }
 
 
-    class Factory(app: Application, private val employeeRepo: EmployeeRepoImpl) : ViewModelFactory(app) {
+    class Factory(app: Application, private val employeeRepo: EmployeeRepoImpl?) : ViewModelFactory(app) {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return EmployeeViewModel(employeeRepo) as T
         }
