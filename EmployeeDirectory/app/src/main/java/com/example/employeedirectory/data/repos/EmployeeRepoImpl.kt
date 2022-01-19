@@ -3,7 +3,6 @@ package com.example.employeedirectory.data.repos
 import com.example.employeedirectory.data.datasources.EmployeeDataSource
 import com.example.employeedirectory.data.datasources.api.NetworkHelper
 import com.example.employeedirectory.data.datasources.api.dtos.toStateFlowAllEmployeesEntity
-import com.example.employeedirectory.viewmodels.EmployeeViewModel
 import com.example.employeedirectory.viewmodels.LatestEmployeesUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

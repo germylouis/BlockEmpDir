@@ -29,11 +29,10 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
@@ -52,11 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="14sp"
-        android:fontFamily="@font/poppins_semi_bold"
         android:alpha="0.7"
+        android:fontFamily="@font/poppins_semi_bold"
         android:text="@string/employee_list_empty_lbl"
         android:textColor="@color/md_theme_dark_onBackground"
+        android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
