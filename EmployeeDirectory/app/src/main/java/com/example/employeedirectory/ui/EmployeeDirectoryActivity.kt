@@ -1,21 +1,18 @@
-package com.example.employeedirectory
+package com.example.employeedirectory.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.employeedirectory.constants.Constants
 import com.example.employeedirectory.data.datasources.EmployeeDataSource
 import com.example.employeedirectory.data.datasources.RetrofitInstance
 import com.example.employeedirectory.data.repos.EmployeeRepoImpl
 import com.example.employeedirectory.databinding.EmployeeDirectoryActivityBinding
-import com.example.employeedirectory.ui.adapters.EmployeeDirectoryAdapter
 import com.example.employeedirectory.viewmodels.EmployeeViewModel
 import com.example.employeedirectory.viewmodels.LatestEmployeesUiState
 import kotlinx.coroutines.launch
@@ -33,13 +30,11 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
         get() = EmployeeViewModel.Factory(application, employeeRepo)
     private val viewModel: EmployeeViewModel by viewModels { factory }
     private var binding: EmployeeDirectoryActivityBinding? = null
-    private var employeeAdapter: EmployeeDirectoryAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = EmployeeDirectoryActivityBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        employeeAdapter = EmployeeDirectoryAdapter()
 
         /**
          * Code block from:
@@ -61,30 +56,24 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
                                 TAG,
                                 "germ: LatestEmployeesUiState.Success. ${state.employees}"
                             )
-                            binding?.progressBar?.visibility = View.GONE
-                            binding?.employeesRv?.apply {
-                                adapter = employeeAdapter
-                                layoutManager = LinearLayoutManager(this@EmployeeDirectoryActivity)
-                            }
-                            state.employees?.let { employeeAdapter?.updateData(it) }
-                            binding?.swipeRefresh?.setOnRefreshListener {
-                                binding?.swipeRefresh?.isRefreshing = false
-                                state.employees?.let {
-                                    employeeAdapter?.updateData(
-                                        it
-                                    )
-                                }
+                            val fragment: HomeFragment =
+                                HomeFragment.newInstance(state.employees)
+                            val fragmentManager = supportFragmentManager
+                            binding?.run {
+                                fragmentManager.beginTransaction().replace(root.id, fragment)
+                                    .commit()
                             }
                         }
                         is LatestEmployeesUiState.Error -> {
                             Log.d(TAG, "germ: LatestEmployeesUiState.Error.")
-                            binding?.progressBar?.visibility = View.GONE
-                            binding?.emptyImage?.visibility = View.VISIBLE
-                            binding?.emptyMessage?.visibility = View.VISIBLE
+//                            binding.progressBar.visibility = View.GONE
+//                            binding.emptyImage.visibility = View.VISIBLE
+//                            binding.emptyMessage.visibility = View.VISIBLE
                         }
 
                         is LatestEmployeesUiState.Loading -> {
-                            binding?.progressBar?.visibility = View.VISIBLE
+//                            binding.progressBar.visibility = View.VISIBLE
+
                         }
                     }
                 }

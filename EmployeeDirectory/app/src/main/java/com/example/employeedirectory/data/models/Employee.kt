@@ -9,7 +9,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 package com.example.employeedirectory.data.models
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Employee(
     val uuid: String,
     val full_name: String,
@@ -20,4 +23,4 @@ data class Employee(
     val photo_url_large: String,
     val team: String,
     val employee_type: String
-)
+) : Parcelable

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Layout Resources came from:
+<?xml version="1.0" encoding="utf-8"?><!-- Layout Resources came from:
 https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android-xml-layout/ -->
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_large"
@@ -13,6 +13,7 @@ https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android
     app:cardElevation="0dp">
 
     <LinearLayout
+        android:id="@+id/profile_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -68,6 +69,7 @@ https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android
                 android:layout_marginTop="@dimen/margin_large"
                 android:fontFamily="@font/poppins_semi_bold"
                 android:lineSpacingExtra="7sp"
+                android:paddingTop="@dimen/padding_small"
                 android:textColor="@color/md_theme_dark_onSurface"
                 android:textColorHighlight="@color/md_theme_dark_onSecondaryContainer"
                 android:textSize="14sp"
@@ -75,18 +77,6 @@ https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Germy Louis" />
 
-            <TextView
-                android:id="@+id/fld_employee_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_large"
-                android:fontFamily="@font/poppins_medium"
-                android:lineSpacingExtra="7sp"
-                android:textColor="@color/md_theme_dark_onSurface"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/profile_image"
-                app:layout_constraintTop_toBottomOf="@+id/fld_employee_name"
-                tools:text="glouis@imobile3.com" />
 
             <TextView
                 android:id="@+id/fld_employee_team"
@@ -95,42 +85,13 @@ https://www.ronnystudio.com/article-screen-using-cardview-list-with-free-android
                 android:layout_marginStart="@dimen/margin_large"
                 android:fontFamily="@font/poppins_medium"
                 android:lineSpacingExtra="7sp"
+                android:paddingTop="@dimen/padding_small"
                 android:textColor="@color/md_theme_dark_onSurface"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
-                app:layout_constraintTop_toBottomOf="@+id/fld_employee_email"
-                tools:text="VitalPOS" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="GOONIES" />
 
-            <TextView
-                android:id="@+id/lbl_bio"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/margin_large"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:lineSpacingExtra="6sp"
-                android:text="@string/employee_list_bio_lbl"
-                android:textColor="@color/md_theme_dark_onSurface"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fld_employee_team"
-                tools:text="Bio: " />
-
-            <TextView
-                android:id="@+id/fld_bio"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small"
-                android:ellipsize="end"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="7sp"
-                android:maxLines="2"
-                android:textColor="@color/md_theme_dark_onSurface"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/lbl_bio"
-                app:layout_constraintTop_toBottomOf="@id/fld_employee_team"
-                tools:text="Software Engineer I for Global Payments." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
