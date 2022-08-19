@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.employeedirectory.constants.Constants
 import com.example.employeedirectory.data.models.Employee
 import com.example.employeedirectory.databinding.FragmentHomeBinding
 import com.example.employeedirectory.ui.adapters.EmployeeDirectoryAdapter
@@ -22,11 +23,16 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            employees = it.getParcelableArrayList("employees_list")
+        if (savedInstanceState == null) {
+            arguments?.let {
+                employees = it.getParcelableArrayList(Constants.EMPLOYEES_LIST)
+            }
+        }else{
+            savedInstanceState.let {
+                employees = it.getParcelableArrayList(Constants.EMPLOYEES_LIST)
+            }
         }
         employeeAdapter = EmployeeDirectoryAdapter()
-
     }
 
     override fun onCreateView(
@@ -56,6 +62,21 @@ class HomeFragment : Fragment() {
                 )
             }
         }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        employees?.let {
+            outState.putParcelableArrayList(Constants.EMPLOYEES_LIST, it)
+        }
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.run {
+            employees = getParcelableArrayList(Constants.EMPLOYEES_LIST)
+        }
     }
 
     companion object {
@@ -64,7 +85,7 @@ class HomeFragment : Fragment() {
             HomeFragment().apply {
                 arguments = Bundle().apply {
                     if (!employees.isNullOrEmpty()) {
-                        putParcelableArrayList("employees_list", employees as java.util.ArrayList)
+                        putParcelableArrayList(Constants.EMPLOYEES_LIST, employees as java.util.ArrayList)
                     }
                 }
             }

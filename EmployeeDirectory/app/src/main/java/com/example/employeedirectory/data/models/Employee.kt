@@ -14,13 +14,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Employee(
-    val uuid: String,
-    val full_name: String,
-    val phone_number: Long,
-    val email_address: String,
-    val biography: String,
-    val photo_url_small: String,
-    val photo_url_large: String,
-    val team: String,
-    val employee_type: String
+    val uuid: String? = null,
+    val full_name: String? = null,
+    val phone_number: Long? = null,
+    val email_address: String? = null,
+    val biography: String? = null,
+    val photo_url_small: String? = null,
+    val photo_url_large: String? = null,
+    val team: String? = null,
+    val employee_type: String? = null
 ) : Parcelable

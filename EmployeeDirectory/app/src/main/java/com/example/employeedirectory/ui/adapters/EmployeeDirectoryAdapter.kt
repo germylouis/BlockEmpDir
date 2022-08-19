@@ -36,7 +36,7 @@ class EmployeeDirectoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         fun bind(employee: Employee?) {
             with(employeeListViewBinding) {
                 employee?.apply {
-                    profileImage.loadImage(photo_url_small)
+                    profileImage.loadImage(photo_url_small ?: "")
                     fldEmployeeName.text = full_name
                     fldEmployeeTeam.text = team
                 }

@@ -11,10 +11,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.employeedirectory.constants.Constants
 import com.example.employeedirectory.data.datasources.EmployeeDataSource
 import com.example.employeedirectory.data.datasources.RetrofitInstance
+import com.example.employeedirectory.data.models.Employee
 import com.example.employeedirectory.data.repos.EmployeeRepoImpl
 import com.example.employeedirectory.databinding.EmployeeDirectoryActivityBinding
 import com.example.employeedirectory.viewmodels.EmployeeViewModel
-import com.example.employeedirectory.viewmodels.LatestEmployeesUiState
 import kotlinx.coroutines.launch
 
 class EmployeeDirectoryActivity : AppCompatActivity() {
@@ -31,11 +31,14 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
     private val viewModel: EmployeeViewModel by viewModels { factory }
     private var binding: EmployeeDirectoryActivityBinding? = null
 
+    private var employees: ArrayList<Employee>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = EmployeeDirectoryActivityBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        var employees: ArrayList<Employee>? = null
         /**
          * Code block from:
          * https://medium.com/androiddevelopers/repeatonlifecycle-api-design-story-8670d1a7d333
@@ -48,40 +51,39 @@ class EmployeeDirectoryActivity : AppCompatActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // Safely collect from locations when the lifecycle is STARTED
                 // and stop collecting when the lifecycle is STOPPED
-                viewModel.uiState.collect { state ->
-                    // New employees, update the map
-                    when (state) {
-                        is LatestEmployeesUiState.Success -> {
-                            Log.d(
-                                TAG,
-                                "germ: LatestEmployeesUiState.Success. ${state.employees}"
-                            )
-                            val fragment: HomeFragment =
-                                HomeFragment.newInstance(state.employees)
-                            val fragmentManager = supportFragmentManager
-                            binding?.run {
-                                fragmentManager.beginTransaction().replace(root.id, fragment)
-                                    .commit()
-                            }
-                        }
-                        is LatestEmployeesUiState.Error -> {
-                            Log.d(TAG, "germ: LatestEmployeesUiState.Error.")
-//                            binding.progressBar.visibility = View.GONE
-//                            binding.emptyImage.visibility = View.VISIBLE
-//                            binding.emptyMessage.visibility = View.VISIBLE
-                        }
-
-                        is LatestEmployeesUiState.Loading -> {
-//                            binding.progressBar.visibility = View.VISIBLE
-
-                        }
+                if (savedInstanceState == null) {
+                    viewModel.getEmployees().collect {
+                        employees = it as? ArrayList<Employee>
+                    }
+                } else {
+                    savedInstanceState.run {
+                        employees = getParcelableArrayList(Constants.EMPLOYEES_LIST)
                     }
                 }
+
+                // New employees, update the map
+                Log.d(
+                    TAG,
+                    "germ: LatestEmployeesUiState.Success. $employees"
+                )
+                val fragment: HomeFragment =
+                    HomeFragment.newInstance(employees)
+                val fragmentManager = supportFragmentManager
+                binding?.run {
+                    fragmentManager.beginTransaction().replace(root.id, fragment)
+                        .commit()
+                }
+                this@EmployeeDirectoryActivity.employees = employees as ArrayList<Employee>
+
             }
-            // Note: at this point, the lifecycle is DESTROYED!
         }
+    }
 
-
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        employees?.let {
+            outState.putParcelableArrayList(Constants.EMPLOYEES_LIST, it)
+        }
     }
 
     companion object {
