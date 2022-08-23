@@ -20,9 +20,8 @@ I focused a lot on the architecture so that if I were to iterate upon it, so tha
 I was trying to solve the issue of decoupling my network calls with the domain specific use cases. For the most part, I  think that goal was achieved.
 
 ## How long did you spend on this project?
-I spent an unnecessary amount of time on this project, spread over 3-4 days.
+I spent about 12-15, spread over 3-4 days.
 
-The reason being that it is my belief that these take home projects are really only worth while if A. I receive an offer or B. I learned something. I did my best to stick with what I know best and branch off and do something new to broaden my knowledge of the Android SDK.
 
 ## Did you make any trade-offs for this project? What would you have done differently with more time?
 I could not complete the implementation of error handling, swipe refresh or image cacheing. I have little to no experience with either. This was the main reason why I spent a great deal of time on this project. I had to learn how to best implement these features with my specific use case.
